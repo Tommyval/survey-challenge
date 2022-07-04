@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:new_challenge/page/models/sign.dart';
-import 'package:new_challenge/page/question_page.dart';
-import 'package:new_challenge/page/start_screen.dart';
+import 'package:new_challenge/page/submit_screen.dart';
+import 'package:new_challenge/routes/routes.dart';
+import 'package:new_challenge/services/question_list_service.dart';
+import 'package:new_challenge/services/sign.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -17,12 +18,18 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => Signin(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => QuestionService(),
         )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: QuestionPage(),
-      ),
+      builder: (context, child) {
+        return const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: RouteManager.homepage,
+          onGenerateRoute: RouteManager.generateRoute,
+        );
+      },
     );
   }
 }
