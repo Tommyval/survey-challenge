@@ -12,7 +12,6 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   TextEditingController inputController = TextEditingController();
-  bool _strtbutton = false;
 
   @override
   void dispose() {
@@ -67,11 +66,6 @@ class _StartPageState extends State<StartPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            _strtbutton = value.isNotEmpty ? true : false;
-                          });
-                        },
                         keyboardType: TextInputType.text,
                         controller: inputController,
                         decoration: const InputDecoration(
@@ -88,7 +82,6 @@ class _StartPageState extends State<StartPage> {
                   width: 310,
                   child: ElevatedButton(
                       onPressed: () {
-                        _strtbutton == true;
                         context.read<Signin>().username = inputController.text;
                         Navigator.of(context).pushNamed(RouteManager.firstpage);
                       },
