@@ -1,130 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:new_challenge/page/models/sign.dart';
-import 'package:provider/provider.dart';
 
-class StartPage extends StatelessWidget {
-  Textfields? inputcontroller;
-  StartPage({this.inputcontroller});
-  Color maincolor = const Color(0XFF252C4A);
+import 'package:new_challenge/routes/routes.dart';
+import 'package:new_challenge/services/sign.dart';
+import 'package:new_challenge/utils/extension.dart';
+import 'package:provider/src/provider.dart';
+
+class StartPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.android,
-                size: 100,
-              ),
-              SizedBox(
-                height: 75,
-              ),
-              Text(
-                'Hello Again!',
-                style: TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'This survey requres your view on the prominent',
-                style: TextStyle(fontSize: 20),
-              ),
-              const Text(
-                'issue on Breast and Cervical Cancer.',
-                style: TextStyle(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Textfields(),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 50,
-                width: 380,
-                child: ElevatedButton(
-                    onPressed: () {
-                      context.read<Signin>().username =
-                          inputcontroller.toString();
-                    },
-                    child: const Text(
-                      'Start Survey',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(maincolor),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                      ),
-                    )),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Membership()
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  State<StartPage> createState() => _StartPageState();
 }
 
-class Textfields extends StatefulWidget {
-  Textfields({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<Textfields> createState() => _TextfieldsState();
-}
-
-class _TextfieldsState extends State<Textfields> {
-  TextEditingController inputcontroller = TextEditingController();
+class _StartPageState extends State<StartPage> {
+  TextEditingController inputController = TextEditingController();
 
   @override
   void dispose() {
-    inputcontroller.dispose();
+    inputController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.white),
-                borderRadius: BorderRadius.circular(12)),
-            child: Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: TextField(
-                keyboardType: TextInputType.text,
-                controller: inputcontroller,
-                decoration:
-                    InputDecoration(border: InputBorder.none, hintText: 'Name'),
-              ),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Utils.primarycolor,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.android,
+                  size: 100,
+                ),
+                const SizedBox(
+                  height: 75,
+                ),
+                const Text(
+                  'Hello Again!',
+                  style: TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'This survey requires your view on the prominent',
+                  style: TextStyle(fontSize: 20),
+                ),
+                const Text(
+                  'issue on Breast cancer.',
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    margin: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextField(
+                        keyboardType: TextInputType.text,
+                        controller: inputController,
+                        decoration: const InputDecoration(
+                            border: InputBorder.none, hintText: 'Name'),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 50,
+                  width: 310,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        context.read<Signin>().username = inputController.text;
+                        Navigator.of(context).pushNamed(RouteManager.firstpage);
+                      },
+                      child: const Text(
+                        'Proceed',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Utils.maincolor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                        ),
+                      )),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                const Membership()
+              ],
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
-      ],
+      ),
     );
   }
 }
